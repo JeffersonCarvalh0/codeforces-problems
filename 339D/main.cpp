@@ -1,5 +1,3 @@
-/*  WA. It shows the right answer in my computer, but not in the cf systems */
-
 # include <iostream>
 # include <vector>
 # include <cmath>
@@ -25,28 +23,6 @@ public:
         }
     }
 
-    int query(int l, int r) {
-        int res = -1;
-        for (l += n, r += n; l <= r; l >>= 1, r >>= 1) {
-            if (l & 1) {
-                if (res == -1) res = tree[l++].value;
-                else {
-                    if (tree[l].op) res |= tree[l++].value;
-                    else res ^= tree[l++].value;
-                }
-            }
-
-            if (!(r & 1)) {
-                if (res == -1) res = tree[r--].value;
-                else {
-                    if (tree[r].op) res |= tree[r--].value;
-                    else res ^= tree[r--].value;
-                }
-            }
-        }
-        return res;
-    }
-
     void modify(int p, int value) {
         for (tree[p += n].value = value; p > 1; p >>= 1) {
             if (tree[p].op) tree[p>>1].value = tree[p].value | tree[p^1].value;
@@ -69,7 +45,7 @@ int main() {
     while (m--) {
         cin >> p >> b;
         tree.modify(--p, b);
-        cout << tree.query(1, n) << '\n';
+        cout << tree.tree[1].value << '\n';
     }
     return 0;
 }
