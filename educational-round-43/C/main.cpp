@@ -12,7 +12,9 @@ struct segment {
 
 struct segment_comp {
     bool operator () (const segment &lhs, const segment &rhs) {
-        return lhs.l <= rhs.l ? true : false;
+        if (lhs.l < rhs.l) return true;
+        if (lhs.l == rhs.l) return lhs.r > rhs.r ? true : false;
+        return false;
     }
 };
 
@@ -30,15 +32,8 @@ int main() {
     }
 
     for (auto it1 = a.begin(); it1 != a.end(); ++it1) {
-        for(auto it2 = next(it1); it2 != a.end(); ++it2) {
-            if (it2->r <= it1->r) {
-                cout << it2->i << ' ' << it1->i << '\n';
-                return 0;
-            }
-            if (it1->l >= it2->l && it1->r <= it2->r) {
-                cout << it1->i << ' ' << it2->i << '\n';
-                return 0;
-            }
+        for (auto it2 = next(it1); it2 != a.end() && it2->l <= it1->r; ++it2) {
+            if (it2->l >= it1->l && it2->r <= it1->r) { cout << it2->i << ' ' << it1->i << '\n'; return 0; }
         }
     }
 
