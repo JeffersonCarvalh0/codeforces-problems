@@ -18,12 +18,12 @@ int main() {
 
     cin >> k;
     cur = 0;
-    for (auto i = a.begin(), j = ++a.begin(); i != j;) {
+    for (auto i = a.begin(), j = ++a.begin(); i != j && j != a.end();) {
         res = *j - *i;
         if (res > cur && res <= k) cur = res;
-        if (res < k && j != --a.end()) ++j;
-        else if (res > k && *i < *j) ++i;
-        else break;
+        if (res < k) ++j;
+        if (res > k) ++i;
+        if (res == k) break;
     }
 
     for (auto &num : a) cout << num << ' ';
