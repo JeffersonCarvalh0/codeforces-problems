@@ -1,6 +1,3 @@
-// The exact same code shows onde answer here, and another in the codeforces systems.
-// The exact same code, exact same input. Their outputs are different.
-
 # include <iostream>
 # include <vector>
 # include <cmath>
@@ -32,7 +29,7 @@ int main() {
     vector<bool> primes = sieve(1e6);
     unordered_set<ll> answers;
 
-    for (size_t i = 2; i < primes.size(); ++i) if (primes[i]) answers.insert(i*i);
+    for (ll i = 2; i < primes.size(); ++i) if (primes[i]) answers.insert(i*i);
 
     cin >> n;
     while (n--) {
