@@ -1,14 +1,16 @@
-// TLE
+// The exact same code shows onde answer here, and another in the codeforces systems.
+// The exact same code, exact same input. Their outputs are different.
 
 # include <iostream>
 # include <vector>
 # include <cmath>
+# include <unordered_set>
 
 typedef long long ll;
 
 using namespace std;
 
-vector<bool> sieve(ll n) {
+vector<bool> sieve(int n) {
     vector<bool> is_prime(n + 1, true);
     is_prime[0] = false; is_prime[1] = false;
 
@@ -21,27 +23,21 @@ vector<bool> sieve(ll n) {
     return is_prime;
 }
 
-bool t_prime(ll n, vector<bool> &primes) {
-    int divisors = 1, cur = 0, root = sqrt(n);
-
-    for (int i = 2; i <= root && divisors <= 3;) {
-        if ((n % i) == 0) { ++cur; n /= i; }
-        else { divisors *= cur + 1; cur = 0; ++i; }
-    }
-    return divisors == 3;
-}
-
 int main() {
 
     ios_base::sync_with_stdio(0); cin.tie(0);
 
-    ll n, x;
+    int n;
+    ll x;
     vector<bool> primes = sieve(1e6);
+    unordered_set<ll> answers;
+
+    for (size_t i = 2; i < primes.size(); ++i) if (primes[i]) answers.insert(i*i);
 
     cin >> n;
     while (n--) {
         cin >> x;
-        t_prime(x, primes) ? cout << "YES\n" : cout << "NO\n";
+        answers.find(x) != answers.end() ? cout << "YES\n" : cout << "NO\n";
     }
 
     return 0;
