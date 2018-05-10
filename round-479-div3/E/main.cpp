@@ -3,6 +3,7 @@
 # include <iostream>
 # include <vector>
 # include <list>
+# include <stack>
 
 using namespace std;
 
@@ -10,24 +11,30 @@ class Graph {
 public:
     int v;
     vector<list<int>> adj_list;
+    vector<int> degree;
 
-    Graph(int v): v(v) { adj_list = vector<list<int>>(v); }
-    void addEdge(int v1, int v2) { adj_list[v1].push_back(v2); adj_list[v2].push_back(v1); }
+    Graph(int v): v(v) { adj_list = vector<list<int>>(v); degree = vector<int>(v, 0); }
+    void addEdge(int v1, int v2) { adj_list[v1].push_back(v2); adj_list[v2].push_back(v1); ++degree[v1]; ++degree[v2]; }
 
     int cycles() {
         vector<bool> visited(v, false);
+        bool cycle = true;
         int counter = 0;
-        for (int i = 0; i < v; ++i) if(!visited[i]) dfs(i, visited, counter, i);
+        for (int i = 0; i < v; ++i) {
+            if(!visited[i]) {
+                dfs(i, visited, cycle);
+                if (cycle) ++counter;
+                cycle = true;
+            }
+        }
         return counter;
     }
 
-    void dfs(int node, vector<bool> &visited, int &counter, int last) {
+    void dfs(int node, vector<bool> &visited, bool &cycle) {
         visited[node] = true;
+        if (degree[node] != 2) cycle = false;
         for (auto &vertex : adj_list[node]) {
-            cout << "Current node: " << node + 1 << " Looking into: " << vertex + 1;
-            if (!visited[vertex]) { cout << " Not visited yet.\n";  dfs(vertex, visited, counter, node); }
-            else if (vertex != last) { cout << " Has been visited, forms a cycle.\n"; ++counter; }
-            else cout << '\n';
+            if (!visited[vertex]) dfs(vertex, visited, cycle);
         }
     }
 };
