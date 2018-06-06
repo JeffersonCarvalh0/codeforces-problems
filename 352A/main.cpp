@@ -13,12 +13,15 @@ int main() {
     count_0 = n - count_5;
     sum = count_5 * 5;
 
-    if (sum < 90 && count_0 == 0) { cout << "-1\n"; return 0; }
-    else if (sum < 45 && count_0 > 0) { cout << "0\n"; return 0; }
-    else if ((sum >= 45 && count_0 > 0) || sum >= 90) while (count_5 % 9 != 0) --count_5;
+    while ((count_5 * 5) % 9 != 0) --count_5;
 
-    while (count_5--) cout << 5;
-    while (count_0--) cout << 0;
+    for (int i = 0; i < count_5; ++i) sum += 5;
+    for (int i = 0; i < count_0; ++i) sum *= 10;
+
+    if (sum % 90 == 0) {
+        for (int i = 0; i < count_5; ++i) cout << 5;
+        for (int i = 0; i < count_0; ++i) cout << 10;
+    } else cout << "-1";
 
     cout << '\n';
 
