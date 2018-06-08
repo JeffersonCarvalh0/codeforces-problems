@@ -1,4 +1,3 @@
-// Not done yet
 # include <iostream>
 
 using namespace std;
@@ -11,7 +10,7 @@ int main() {
     total_liq = k * l; total_lim = c * d;
 
     if (total_liq / nl >= n && total_lim >= n && p/np >= n)
-        cout << min(total_liq/nl, min(total_lim, p/np));
+        cout << min(total_liq/nl, min(total_lim, p/np)) / n;
     else cout << 0;
 
     cout << '\n';
