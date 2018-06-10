@@ -1,4 +1,3 @@
-// Not finished yet
 # include <iostream>
 
 typedef long long ll;
@@ -11,9 +10,9 @@ int main() {
 
     cin >> n >> k;
 
-    if (k == 1) cout << 1 << '\n';
-    if (k <= n / 2) cout << k + (k - 1) << '\n';
-    else cout << ((k - (n/2)) - (n & 1)) * 2 << '\n';
+    if (k <= (n + 1) / 2) cout << k * 2 - 1;
+    else cout << (k - (n + 1) / 2) * 2;
+    cout << '\n';
 
     return 0;
 }
