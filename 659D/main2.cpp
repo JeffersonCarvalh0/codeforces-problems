@@ -1,4 +1,4 @@
-// Comparing the line's slope
+// Using cross product
 
 # include <iostream>
 # include <vector>
@@ -11,7 +11,9 @@ struct Point {
 };
 
 inline int orientation(Point &p1, Point &p2, Point &p3) {
-    return ((p2.y - p1.y) * (p3.x - p1.x)) - ((p2.x - p1.x) * (p3.y - p1.y));
+    int vec1[2] = { p2.x - p1.x, p2.y - p1.y };
+    int vec2[2] = { p3.x - p1.x, p3.y - p1.y };
+    return (vec1[0] * vec2[1]) - (vec1[1] * vec2[0]);
 }
 
 int main() {
@@ -23,7 +25,7 @@ int main() {
     for (int i = 0; i <= n; ++i) { cin >> x >> y; points[i] = Point(x, y); }
 
     for (int i = 0, j = 1, k = 2; k <= n; ++i, ++j, ++k)
-        if (orientation(points[i], points[j], points[k]) < 0) ++count;
+        if (orientation(points[i], points[j], points[k]) > 0) ++count;
 
     cout << count << '\n';
 
