@@ -1,28 +1,31 @@
-// TLE
+// Accepted after the contest was over
 # include <iostream>
-# include <algorithm>
 # include <map>
+
+typedef long long ll;
 
 using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n, q, a[100005], j;
-    map<int, int> past_queries;
+    ll n, q, j, cur;
+    map<ll, ll> a;
 
     cin >> n >> q;
-    for (int i = 0; i < n; ++i) cin >> a[i];
-    sort(a, a + n);
+    for (ll i = 0; i < n; ++i) cin >> cur, ++a[cur];
 
     while (q--) {
         cin >> j;
-        int coins = 0, cur = j;
-        if (past_queries.find(j) != past_queries.end()) cout << past_queries[j] << '\n';
-        else {
-            for (int i = n - 1; i >= 0; --i) if (a[i] <= cur) cur -= a[i], ++coins;
-            if (cur == 0) cout << coins << '\n', past_queries[cur] = coins;
-            else cout << "-1\n", past_queries[cur] = -1;
+        ll coins = 0;
+        for (auto it = a.rbegin(); it != a.rend() && j > 0; ++it) {
+            if (it->first <= j) {
+                coins += min(j / it->first, it->second);
+                j -= min((j / it->first) * it->first, it->first * it->second);
+            }
         }
+
+        if (j == 0) cout << coins << '\n';
+        else cout << "-1\n";
     }
 
     return 0;
