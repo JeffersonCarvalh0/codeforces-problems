@@ -1,4 +1,3 @@
-// WA, lol
 # include <iostream>
 # include <algorithm>
 # include <set>
@@ -17,15 +16,15 @@ int main() {
     for (int i = 0; i < k; ++i) biggest.insert(b[n - i - 1]), sum += b[n - i - 1];
 
     cout << sum << '\n';
-    int last_idx = -1;
-    for (int i = 0, cnt = 0; i < n; ++i) {
+    int cnt = 0;
+    for (int i = 0; i < n; ++i) {
         auto it = biggest.find(a[i]);
-        if (it == biggest.end() && i == n - 1) cout << i - last_idx;
-        else if (it != biggest.end() && i != 0) cout << i - last_idx << ' ', last_idx = i, biggest.erase(it);
-        else if (it != biggest.end() && i == 0) biggest.erase(it), ++cnt;
+        if (it != biggest.end() && biggest.size() > 1)
+            cout << ++cnt << ' ', cnt = 0, biggest.erase(it);
+        else ++cnt;
     }
 
-    cout <<'\n';
+    cout << cnt << '\n';
 
     return 0;
 }
