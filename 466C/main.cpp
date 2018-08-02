@@ -1,6 +1,5 @@
-// WA
-
 # include <iostream>
+# include <vector>
 
 typedef long long ll;
 
@@ -8,24 +7,25 @@ using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    ll s = 0, cur_sum = 0, max_num = 0, n, a[500005], cnt[500005];
+    int n;
+    ll a[500005], sum = 0, cur_sum = 0, k = 0;
+    vector<int> left, right;
 
     cin >> n;
-    for (int i = 0; i < n; ++i) cin >> a[i], s += a[i];
-    if (s % 3 != 0) cout << 0 << '\n';
-    else {
-        for (int i = n - 1; i >= 0; --i)
-            cur_sum += a[i], cnt[i] = cur_sum == s / 3;
+    for (int i = 0; i < n; ++i) cin >> a[i], sum += a[i];
 
-        if (n > 1) for (int i = n - 2; i >= 0; --i) cnt[i] += cnt[i + 1];
+    if (sum % 3 != 0 || n < 2) { cout << "0\n"; return 0; }
 
-        for (int i = 0, cur_sum = 0; i < n; ++i) {
-            cur_sum += a[i];
-            if (cur_sum == s / 3 && i < n - 2) max_num += cnt[i + 2];
-        }
-
-        cout << max_num << '\n';
+    for (int i = 0; i < n - 1; ++i) {
+        cur_sum += a[i];
+        if (cur_sum == sum / 3) left.push_back(i);
+        if (cur_sum == (2 * sum) / 3) right.push_back(i);
     }
+
+    for (int i = 0; i < left.size(); ++i)
+        k += right.end() - lower_bound(right.begin(), right.end(), left[i] + 1);
+
+    cout << k << '\n';
 
     return 0;
 }
